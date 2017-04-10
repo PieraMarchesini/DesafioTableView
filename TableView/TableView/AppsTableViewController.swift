@@ -12,6 +12,8 @@ class AppsTableViewController: UITableViewController {
     
     var apps:[(foto: String, nome: String, categoria: String)] = [("facebook.png", "Facebook", "Social"), ("instagram.png", "Instagram", "Social"), ("messenger.png", "Messenger", "Comunicação"), ("snapchat.png", "Snapchat", "Social"), ("spotify.png", "Spotify", "Entretenimento"), ("uber.png", "Uber", "Transporte"), ("whatsapp.png", "WhatsApp", "Comunicação") ]
     
+    var sections: [String] = [String]()
+    
     @IBAction func saveToMainViewController(segue: UIStoryboardSegue) {
         let appEditViewcontroller = segue.source as! AppEditTableViewController
         let index = appEditViewcontroller.index
@@ -44,28 +46,33 @@ class AppsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        for app in apps {
+            if !sections.contains(app.categoria) {
+                sections.append(app.categoria)
+            }
+        }
+        
+        return sections.count
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section]
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return apps.count
+        return apps.filter({ $0.categoria == sections[section] }).count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "app", for: indexPath)
-        
-        cell.textLabel?.text = apps[indexPath.row].nome
-        cell.detailTextLabel?.text = apps[indexPath.row].categoria
-        cell.imageView?.image = UIImage(named: apps[indexPath.row].foto)
-        
+        let s = apps.filter({ $0.categoria == sections[indexPath.section] })
+        cell.textLabel?.text = s[indexPath.row].nome
+        cell.imageView?.image = UIImage(named: s[indexPath.row].foto)
         return cell
     }
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
 
@@ -89,7 +96,6 @@ class AppsTableViewController: UITableViewController {
     }
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
         return true
     }
 
