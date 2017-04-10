@@ -10,7 +10,8 @@ import UIKit
 
 class AppsTableViewController: UITableViewController {
     
-    var apps:[(foto: String, nome: String, categoria: String)] = [("facebook.png", "Facebook", "Social"), ("whatsapp.png", "WhatsApp", "Comunicação")]
+    var apps:[(foto: String, nome: String, categoria: String)] = [("facebook.png", "Facebook", "Social"), ("instagram.png", "Instagram", "Social"), ("messenger.png", "Messenger", "Comunicação"), ("snapchat.png", "Snapchat", "Social"), ("spotify.png", "Spotify", "Entretenimento"), ("uber.png", "Uber", "Transporte"), ("whatsapp.png", "WhatsApp", "Comunicação") ]
+    //("youtube.png", "Youtube", "Entretenimento")
 
     override func viewDidLoad() {
         super.viewDidLoad()
