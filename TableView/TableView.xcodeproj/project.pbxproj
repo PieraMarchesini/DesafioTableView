@@ -13,6 +13,7 @@
 		655086271E9BFC2C00F6E08A /* TableViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655086261E9BFC2C00F6E08A /* TableViewTests.swift */; };
 		655086341E9C096200F6E08A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 655086331E9C096200F6E08A /* Assets.xcassets */; };
 		BD5607951E9C000C0036050C /* AppsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5607941E9C000C0036050C /* AppsTableViewController.swift */; };
+		BD5607971E9C12FF0036050C /* AppEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5607961E9C12FF0036050C /* AppEditTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		655086281E9BFC2C00F6E08A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		655086331E9C096200F6E08A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD5607941E9C000C0036050C /* AppsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsTableViewController.swift; sourceTree = "<group>"; };
+		BD5607961E9C12FF0036050C /* AppEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppEditTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				6550861D1E9BFC2C00F6E08A /* Info.plist */,
 				BD5607941E9C000C0036050C /* AppsTableViewController.swift */,
 				655086331E9C096200F6E08A /* Assets.xcassets */,
+				BD5607961E9C12FF0036050C /* AppEditTableViewController.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 			files = (
 				655086121E9BFC2C00F6E08A /* AppDelegate.swift in Sources */,
 				BD5607951E9C000C0036050C /* AppsTableViewController.swift in Sources */,
+				BD5607971E9C12FF0036050C /* AppEditTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

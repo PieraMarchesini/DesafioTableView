@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vwv-Bx-pce">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ofD-RS-K2R">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -41,6 +41,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="prk-Ev-ER3" kind="show" identifier="edit" id="ZV1-Ts-hNK"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -53,25 +56,82 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kxg-wE-Qg2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1000.8" y="54.422788605697157"/>
+            <point key="canvasLocation" x="1940" y="54.422788605697157"/>
+        </scene>
+        <!--App Edit Table View Controller-->
+        <scene sceneID="rFc-f1-kuM">
+            <objects>
+                <tableViewController id="prk-Ev-ER3" customClass="AppEditTableViewController" customModule="TableView" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="gv9-sb-ZiN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="Nome do aplicativo" id="Fpz-Hp-Lhb">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gNX-5s-XKG">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gNX-5s-XKG" id="1zo-eg-JO0">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mR3-Xe-P0A">
+                                                    <rect key="frame" x="8" y="7" width="359" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="prk-Ev-ER3" id="fGV-Hq-TIU"/>
+                            <outlet property="delegate" destination="prk-Ev-ER3" id="uxI-3S-a02"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="W61-r8-hre">
+                        <barButtonItem key="rightBarButtonItem" title="Salvar" id="TDw-br-G2S">
+                            <connections>
+                                <segue destination="V6H-uZ-s1N" kind="unwind" identifier="save" unwindAction="saveToMainViewControllerWithSegue:" id="hUv-b3-MbG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="editModelTextField" destination="mR3-Xe-P0A" id="RNk-1v-lv2"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0NX-3s-JVa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="V6H-uZ-s1N" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2675" y="54"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="cfy-Sx-HxK">
+        <scene sceneID="G8s-Rt-kev">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vwv-Bx-pce" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ofD-RS-K2R" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="s7x-7H-gYq">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KOi-Sf-dmk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="NT9-2D-GYy">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
-                        <segue destination="fX2-GD-bcC" kind="relationship" relationship="rootViewController" id="CaQ-Az-PyW"/>
+                        <segue destination="fX2-GD-bcC" kind="relationship" relationship="rootViewController" id="jPi-zk-2dM"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dcI-VN-AAn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FQm-DW-ktL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="61.600000000000001" y="54.422788605697157"/>
+            <point key="canvasLocation" x="1000.8" y="54.422788605697157"/>
         </scene>
     </scenes>
 </document>
