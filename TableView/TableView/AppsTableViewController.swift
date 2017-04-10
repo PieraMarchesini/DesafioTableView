@@ -16,7 +16,7 @@ class AppsTableViewController: UITableViewController {
         let appEditViewcontroller = segue.source as! AppEditTableViewController
         let index = appEditViewcontroller.index
         let appString = appEditViewcontroller.editedApp
-        apps[index!] = appString!
+        apps[index!].nome = appString!
         
         tableView.reloadData()
     }

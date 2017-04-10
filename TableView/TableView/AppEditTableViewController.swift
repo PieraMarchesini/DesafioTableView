@@ -14,14 +14,16 @@ class AppEditTableViewController: UITableViewController {
     
     var index: Int?
     
-    var modelArray:[(foto: String, nome: String, categoria: String)]?
+    var modelArray:[(foto: String, nome: String, categoria: String)]!
     
-    var editedApp: (foto: String, nome: String, categoria: String)?
+    //Nome do app
+    var editedApp: String?
+    //(foto: String, nome: String, categoria: String)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        editModelTextField.text = modelArray?[index!].nome
+        editModelTextField.text = modelArray[index!].nome
         
 //        self.navigationItem.rightBarButtonItem = self.save
 
@@ -106,9 +108,11 @@ class AppEditTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "save" {
-            editedApp?.nome = editModelTextField.text!
-            editedApp?.categoria = (modelArray?[index!].categoria)!
-            editedApp?.foto = (modelArray?[index!].foto)!
+            print("testeeee \(editModelTextField.text!)")
+                editedApp = editModelTextField.text!
+            
+//            editedApp?.categoria = (modelArray?[index!].categoria)!
+//            editedApp?.foto = (modelArray?[index!].foto)!
         }
     }
 

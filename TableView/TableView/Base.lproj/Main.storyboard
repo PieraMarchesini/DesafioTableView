@@ -76,7 +76,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mR3-Xe-P0A">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mR3-Xe-P0A" userLabel="Edit row">
                                                     <rect key="frame" x="8" y="7" width="359" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
@@ -102,7 +102,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="editModelTextField" destination="mR3-Xe-P0A" id="RNk-1v-lv2"/>
+                        <outlet property="editModelTextField" destination="mR3-Xe-P0A" id="JAL-Or-KKI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0NX-3s-JVa" userLabel="First Responder" sceneMemberID="firstResponder"/>
