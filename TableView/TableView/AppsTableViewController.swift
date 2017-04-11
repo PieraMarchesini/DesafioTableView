@@ -9,8 +9,9 @@
 import UIKit
 
 class AppsTableViewController: UITableViewController {
+//    var apps: [App] = [App(foto: "facebook.png", nome: "Facebook", categoria: "Social"), App(foto: "instagram.png", nome: "Instagram", categoria: "Social"), App(foto: "messenger.png", nome: "Messenger", categoria: "Comunicação"), App(foto: "snapchat.png", nome: "Snapchat", categoria: "Social"), App(foto: "spotify.png", nome: "Spotify", categoria: "Entretenimento"), App(foto: "uber.png", nome: "Uber", categoria: "Transporte"), App(foto: "whatsapp.png", nome: "WhatsApp", categoria: "Comunicação")]
     
-    var apps:[(foto: String, nome: String, categoria: String)] = [("facebook.png", "Facebook", "Social"), ("instagram.png", "Instagram", "Social"), ("messenger.png", "Messenger", "Comunicação"), ("snapchat.png", "Snapchat", "Social"), ("spotify.png", "Spotify", "Entretenimento"), ("uber.png", "Uber", "Transporte"), ("whatsapp.png", "WhatsApp", "Comunicação") ]
+    var apps: [(foto: String, nome: String, categoria: String)]! = [("facebook.png", "Facebook", "Social"), ("instagram.png", "Instagram", "Social"), ("messenger.png", "Messenger", "Comunicação"), ("snapchat.png", "Snapchat", "Social"), ("spotify.png", "Spotify", "Entretenimento"), ("uber.png", "Uber", "Transporte"), ("whatsapp.png", "WhatsApp", "Comunicação") ]
     
     var sections: [String] = [String]()
     
@@ -51,7 +52,6 @@ class AppsTableViewController: UITableViewController {
                 sections.append(app.categoria)
             }
         }
-        
         return sections.count
     }
     
@@ -76,24 +76,48 @@ class AppsTableViewController: UITableViewController {
         return true
     }
 
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            apps.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let categoria = apps.filter({$0.categoria == sections[indexPath.section]})
+            
+            for (i, app) in apps.enumerated() {
+                if categoria[indexPath.row].nome.localizedStandardContains(app.nome) {
+                    apps.remove(at: i)
+                }
+            }
+            
+            if tableView.numberOfRows(inSection: indexPath.section) == 1 {
+                sections.remove(at: indexPath.section)
+                tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
+            } else {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-
+    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+        let cell = tableView.cellForRow(at: fromIndexPath)?.textLabel?.text
         let app = apps[fromIndexPath.row]
+        
         apps.remove(at: fromIndexPath.row)
         apps.insert(app, at: to.row)
-
+        
+//        if fromIndexPath.section != to.section {
+//            for app in apps {
+//                if app.nome == cell {
+////                    let a = (app.foto, app.nome, sections[to.section])
+////                    apps.insert(a, at: to.row)
+//                }
+//            }
+//        } else {
+////            apps.insert(app, at: to.row)
+//        }
+////        tableView.reloadData()
     }
+    
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -105,6 +129,8 @@ class AppsTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "edit" {
             var path = tableView.indexPathForSelectedRow
+            
+            let categoria = apps.filter({$0.categoria == sections[(path?.section)!]})
             
             let appEditViewcontroller = segue.destination as! AppEditTableViewController
             
