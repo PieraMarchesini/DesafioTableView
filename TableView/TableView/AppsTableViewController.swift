@@ -9,19 +9,28 @@
 import UIKit
 
 class AppsTableViewController: UITableViewController {
-//    var apps: [App] = [App(foto: "facebook.png", nome: "Facebook", categoria: "Social"), App(foto: "instagram.png", nome: "Instagram", categoria: "Social"), App(foto: "messenger.png", nome: "Messenger", categoria: "Comunicação"), App(foto: "snapchat.png", nome: "Snapchat", categoria: "Social"), App(foto: "spotify.png", nome: "Spotify", categoria: "Entretenimento"), App(foto: "uber.png", nome: "Uber", categoria: "Transporte"), App(foto: "whatsapp.png", nome: "WhatsApp", categoria: "Comunicação")]
-    
-    var apps: [(foto: String, nome: String, categoria: String)]! = [("facebook.png", "Facebook", "Social"), ("instagram.png", "Instagram", "Social"), ("messenger.png", "Messenger", "Comunicação"), ("snapchat.png", "Snapchat", "Social"), ("spotify.png", "Spotify", "Entretenimento"), ("uber.png", "Uber", "Transporte"), ("whatsapp.png", "WhatsApp", "Comunicação") ]
+    var apps: [App] = ArrayApp.instance.apps
+//    
+//    var apps: [(foto: String, nome: String, categoria: String)]! = [("facebook.png", "Facebook", "Social"), ("instagram.png", "Instagram", "Social"), ("messenger.png", "Messenger", "Comunicação"), ("snapchat.png", "Snapchat", "Social"), ("spotify.png", "Spotify", "Entretenimento"), ("uber.png", "Uber", "Transporte"), ("whatsapp.png", "WhatsApp", "Comunicação") ]
     
     var sections: [String] = [String]()
     
     @IBAction func saveToMainViewController(segue: UIStoryboardSegue) {
         let appEditViewcontroller = segue.source as! AppEditTableViewController
         let index = appEditViewcontroller.index
-        let appString = appEditViewcontroller.editedApp
-        let appStringCategory = appEditViewcontroller.editedAppCategory
-        apps[index!].nome = appString!
-        apps[index!].categoria = appStringCategory!
+        let editedApp = appEditViewcontroller.editedApp
+        
+        ArrayApp.instance.changeIndex(index: index!, app: editedApp!)
+        
+        for app in apps {
+            if !sections.contains(app.categoria) {
+                sections.append(app.categoria)
+            }
+        }
+        
+//        let appStringCategory = appEditViewcontroller.editedAppCategory
+//        apps[index!].nome = appString!
+//        apps[index!].categoria = appStringCategory!
         
         tableView.reloadData()
     }
@@ -98,24 +107,32 @@ class AppsTableViewController: UITableViewController {
     }
     
     // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        let cell = tableView.cellForRow(at: fromIndexPath)?.textLabel?.text
-        let app = apps[fromIndexPath.row]
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath){
+        var fromArray = apps.filter({$0.categoria == sections[fromIndexPath.section]})
         
-        apps.remove(at: fromIndexPath.row)
-        apps.insert(app, at: to.row)
+        let toArray = apps.filter({$0.categoria == sections[to.section]})
         
-//        if fromIndexPath.section != to.section {
-//            for app in apps {
-//                if app.nome == cell {
-////                    let a = (app.foto, app.nome, sections[to.section])
-////                    apps.insert(a, at: to.row)
-//                }
-//            }
-//        } else {
-////            apps.insert(app, at: to.row)
-//        }
-////        tableView.reloadData()
+        let fromCell = fromArray[fromIndexPath.row]
+        
+        if toArray.count > 0 {
+            fromCell.categoria = toArray[0].categoria
+            fromArray = apps.filter({$0.categoria == sections[fromIndexPath.section]})
+            if fromArray.count == 0 {
+                sections.remove(at: fromIndexPath.section)
+                tableView.deleteSections(IndexSet(integer: fromIndexPath.section), with: .automatic)
+            }
+        } else {
+            fromCell.categoria = sections[to.section]
+        }
+        
+        var appRemoved:App?
+        for (i, app) in apps.enumerated() {
+            if fromCell.nome.localizedStandardContains(app.nome) {
+                appRemoved = apps.remove(at: i)
+            }
+        }
+        
+        apps.insert(appRemoved!, at: to.row)
     }
     
     // Override to support conditional rearranging of the table view.
@@ -130,13 +147,23 @@ class AppsTableViewController: UITableViewController {
         if segue.identifier == "edit" {
             var path = tableView.indexPathForSelectedRow
             
-            let categoria = apps.filter({$0.categoria == sections[(path?.section)!]})
+//            let categoria = apps.filter({$0.categoria == sections[(path?.section)!]})
             
             let appEditViewcontroller = segue.destination as! AppEditTableViewController
+            let cell = tableView.cellForRow(at: path!)?.textLabel?.text
             
             appEditViewcontroller.index = path?.row
             
-            appEditViewcontroller.modelArray = apps
+            for app in apps{
+                if(app.nome == cell){
+                    appEditViewcontroller.index = apps.index(where: {(item) -> Bool in
+                        item.nome == app.nome
+                    })
+                    appEditViewcontroller.app = app
+                }
+            }
+            
+//            appEditViewcontroller.modelArray = categoria
         }
         
     }
