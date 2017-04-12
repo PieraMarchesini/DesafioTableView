@@ -9,43 +9,42 @@
 import UIKit
 
 class AppsTableViewController: UITableViewController {
-    var apps: [App] = ArrayApp.instance.apps
-//    
-//    var apps: [(foto: String, nome: String, categoria: String)]! = [("facebook.png", "Facebook", "Social"), ("instagram.png", "Instagram", "Social"), ("messenger.png", "Messenger", "Comunicação"), ("snapchat.png", "Snapchat", "Social"), ("spotify.png", "Spotify", "Entretenimento"), ("uber.png", "Uber", "Transporte"), ("whatsapp.png", "WhatsApp", "Comunicação") ]
     
+    //Pega a instância dos Apps
+    var apps: [App] = ArrayApp.instance.apps
+    //Array onde ficarão as sections
     var sections: [String] = [String]()
     
+    
+    //Action de salvar a alteração feita no AppEditTableViewController
+    //Dispara quando clica o botão salvar
     @IBAction func saveToMainViewController(segue: UIStoryboardSegue) {
-        let appEditViewcontroller = segue.source as! AppEditTableViewController
-        let index = appEditViewcontroller.index
-        let editedApp = appEditViewcontroller.editedApp
+        //De onde veio a Segue da action
+        let appEditViewController = segue.source as! AppEditTableViewController
+        //Retorna o index do App editado da tela de edição
+        let index = appEditViewController.index
+        //Retorna o App que foi editado da tela de edição
+        let editedApp = appEditViewController.editedApp
         
+        //Altera o App anterior para o editado
         ArrayApp.instance.changeIndex(index: index!, app: editedApp!)
         
+        //Descobre as categorias após salvar
         for app in apps {
             if !sections.contains(app.categoria) {
                 sections.append(app.categoria)
             }
         }
         
-//        let appStringCategory = appEditViewcontroller.editedAppCategory
-//        apps[index!].nome = appString!
-//        apps[index!].categoria = appStringCategory!
-        
+        //Atualiza a tabela após a alteração
         tableView.reloadData()
     }
-    
-    //("youtube.png", "Youtube", "Entretenimento")
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Aparece o botão de editar
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,8 +53,10 @@ class AppsTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
+    
+    //Número de seções
     override func numberOfSections(in tableView: UITableView) -> Int {
+        //Descobre quais são as categorias dos apps
         for app in apps {
             if !sections.contains(app.categoria) {
                 sections.append(app.categoria)
@@ -64,23 +65,29 @@ class AppsTableViewController: UITableViewController {
         return sections.count
     }
     
+    //Define o título das sections
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
     }
 
+    //Número de linhas da tabela
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return apps.filter({ $0.categoria == sections[section] }).count
     }
 
+    //Cria as células da tabela
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //Identificador da célula
         let cell = tableView.dequeueReusableCell(withIdentifier: "app", for: indexPath)
-        let s = apps.filter({ $0.categoria == sections[indexPath.section] })
-        cell.textLabel?.text = s[indexPath.row].nome
-        cell.imageView?.image = UIImage(named: s[indexPath.row].foto)
+
+        let appInSection = apps.filter({ $0.categoria == sections[indexPath.section] })
+        //Texto e imagem que serão mostradas
+        cell.textLabel?.text = appInSection[indexPath.row].nome
+        cell.imageView?.image = UIImage(named: appInSection[indexPath.row].foto)
         return cell
     }
 
-    // Override to support conditional editing of the table view.
+    //Permite a edição da TableView
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -147,8 +154,6 @@ class AppsTableViewController: UITableViewController {
         if segue.identifier == "edit" {
             var path = tableView.indexPathForSelectedRow
             
-//            let categoria = apps.filter({$0.categoria == sections[(path?.section)!]})
-            
             let appEditViewcontroller = segue.destination as! AppEditTableViewController
             let cell = tableView.cellForRow(at: path!)?.textLabel?.text
             
@@ -162,8 +167,6 @@ class AppsTableViewController: UITableViewController {
                     appEditViewcontroller.app = app
                 }
             }
-            
-//            appEditViewcontroller.modelArray = categoria
         }
         
     }

@@ -9,6 +9,7 @@
 import UIKit
 
 public class App {
+    
     var foto: String
     var nome: String
     var categoria: String

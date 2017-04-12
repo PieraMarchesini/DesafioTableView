@@ -10,24 +10,18 @@ import UIKit
 
 class AppEditTableViewController: UITableViewController {
     
-    @IBOutlet weak var editModelTextField: UITextField!
-    
+    @IBOutlet weak var editAppNameTextField: UITextField!
     @IBOutlet weak var editAppCategoryTextField: UITextField!
     
     var index: Int?
     
     var app: App!
-    
-    //Nome do app
     var editedApp: App!
-//    var editedApp: String?
-//    var editedAppCategory: String?
-    //(foto: String, nome: String, categoria: String)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        editModelTextField.text = app.nome
+        editAppNameTextField.text = app.nome
         editAppCategoryTextField.text = app.categoria
         
         //        self.navigationItem.rightBarButtonItem = self.save
@@ -46,7 +40,7 @@ class AppEditTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
-            editModelTextField.becomeFirstResponder()
+            editAppNameTextField.becomeFirstResponder()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -114,8 +108,8 @@ class AppEditTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "save" {
             editedApp = app
-            if editModelTextField.text != nil {
-                editedApp.nome = editModelTextField.text!
+            if editAppNameTextField.text != nil {
+                editedApp.nome = editAppNameTextField.text!
             }
             if editAppCategoryTextField.text != nil {
                 editedApp.categoria = editAppCategoryTextField.text!
